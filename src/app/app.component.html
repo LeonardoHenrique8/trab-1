@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Work</title>
+
+</head>
+<body>
+
+  <header class="header">
+    <div class="container">
+        <h1>Acompanhe aqui seus gastos mensais!</h1>
+    </div>
+  </header>
+
+  <div class="container">
+    <form id="form" #userForm="ngForm" (ngSubmit)="saveForm(userForm)">
+
+      <h3>Coloque abaixo suas informações:</h3>
+
+      <div class="my_box">
+
+        <div class="tipo">
+          <label for="tipo">Tipo:</label>
+          <select id="tipo" name="tipo" [(ngModel)]="revenue.tipo" #tipo="ngModel" required>
+          <option disabled selected value></option>
+          <option>Despesa</option>
+          <option>Receita</option>
+          </select> 
+        </div>
+
+        <div class="descricao">
+          <label for="descricao">Descrição:</label>
+          <input type="text" id="descricao" name="descricao" required [(ngModel)]="revenue.descricao" #descricao="ngModel" minlength="3">
+        </div>
+      </div>
+
+      <div class="my_box">
+        <div class="data">
+          <label for="data">Data:</label>
+          <input type="date" id="data" name="data" required [(ngModel)]="revenue.data" #data="ngModel">
+        </div>
+
+        
+
+        <div class="valor">
+          <label for="valor">Valor:</label>
+          <input type="number" id="valor" name="valor" required [(ngModel)]="revenue.valor" #valor="ngModel" minlength="1">
+        </div>
+
+      </div>
+    
+      <input type="submit" value="Salvar" [disabled]="userForm.invalid">
+    </form>
+  
+    <table *ngIf="my_rev.length > 0">
+      
+      <thead>
+        <tr>
+          <th>Tipo</th>
+          <th>Descrição</th>
+          <th>Data</th>
+          <th>Valor</th>
+          <th>Remover</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let x of my_rev">
+          <td>{{ x.tipo }}</td>
+          <td>{{ x.descricao }}</td>
+          <td>{{ x.data | date:"dd/MM/yyyy" }}</td>
+          <td>{{ x.valor | currency }}</td>
+          <td><input type="button" value="Remover" id="remover" (click)="remover(x)"></td>
+        </tr>
+      </tbody>
+
+    </table>
+
+  </div>
+  
+  <div>
+    <canvas #grafico></canvas>
+  </div>
+
+</body>
+</html>
